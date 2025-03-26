@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokedex</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="website icon" type="image/png" href="/logo.png"/><!-- LINEA PARA EL LOGO DE LA PAGINA EN NAVEGADOR -->
 </head>
 <body> 
     <div class="pokedex-container">
-        <h1>Gotta Catch `em all! </h1>
+        <h1><img src="/pk.png" alt=""> </h1>
         <div class="pokemon-list" id="pokemonList"></div>
     </div>
+
+    <!-- VAMOS A CREAR UNA VISTA ESPECIFICA -->
+
+     <div class="pokemon-detail" id="pokemonDetail" style="display:none"><!-- style="display:none" para que no se muestre enla pantalla -->
+        <button id="btnBack">Bakc to pokedex</button>
+        <div id="pokemonInfo"></div>
+     </div>
     
 </body>
 <script src="main.js"></script>
