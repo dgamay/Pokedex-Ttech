@@ -2,6 +2,7 @@ const pokemonList = document.getElementById("pokemonList")
 const pokemonDetail=document.getElementById("pokemonDetail")
 const pokemonInfo= document.getElementById("pokemonInfo")
 const btnBack = document.getElementById("btnBack")
+const btnBuscar = document.getElementById("btnBuscar")
 
 
 /*  FUNCION QUE LLAMA A  LA API */
@@ -10,8 +11,8 @@ async function getPokemonData(pokemonID) {
     try {
         let res = await fetch (`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
         let pokemon =await res.json()
-/*         console.log(pokemon)
- */    return pokemon 
+        console.log(pokemon)
+    return pokemon 
         
     } catch (error) {
         console.error(error.message)
@@ -38,12 +39,21 @@ function showPokemonDetail(pokemon){
     pokemonList.style.display="none"
     pokemonDetail.style.display="block"
     // Obtener todos los tipos del Pokémon
-    let types = pokemon.types.map(t => t.type.name).join(", ");  // Une los tipos con una coma
-
-    pokemonInfo.innerHTML=`
+    let typesName = []
+    let typesImg = ""
+    for(i=0;i<pokemon.types.length ;i++){
+        console.log(pokemon.types[i].type.name)
+        typesImg = typesImg + `<img src = "./assets/${pokemon.types[i].type.name}.png" alt= "logo tipo ${pokemon.types[i].type.name}">`
+        typesName.push(pokemon.types[i].type.name)
+    }
+    pokemonList.style.display = "none" 
+    pokemonDetail.style.display =  "block"
+/*     let types = pokemon.types.map(t => t.type.name).join(", ");  // Une los tipos con una coma
+ */    pokemonInfo.innerHTML=`
     <img src="${pokemon.sprites.front_default}" alt="image view front ${pokemon.name}">
     <img src="${pokemon.sprites.back_default}" alt="image view back ${pokemon.name}">
-    <h4>Type: ${types}</h4>
+    <h4> ${typesName}</h4>
+    <div> ${typesImg}</div>
     `
 }
 
@@ -51,12 +61,32 @@ async function loadPokedex() {
     for (let i = 1; i<=5; i++) {
         let pokemon =await getPokemonData(i)
         displayPokemon(pokemon)  
-        console.log(pokemon.types[0].type.name)      
-    }
+/*         console.log(pokemon.types[0].type.name)      
+ */    }
     
 }
 btnBack.addEventListener("click",()=>{
     pokemonList.style.display="grid"
     pokemonDetail.style.display="none"
 })
+
+btnBuscar.addEventListener("click", searchPokemonByName);
+
+async function searchPokemonByName() {
+    const inputBuscar = document.getElementById("inputBuscar").value.toLowerCase(); // Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+    if (!inputBuscar) {
+        alert("Por favor, ingresa un nombre de Pokémon.");
+        return;
+    }
+    try {
+        const pokemon = await getPokemonData(inputBuscar); // Llamar a la API usando el nombre en lugar del ID
+        if (pokemon) {
+            pokemonList.innerHTML = ""; // Limpiar la lista de Pokémon
+            displayPokemon(pokemon); // Mostrar solo el Pokémon buscado
+        }
+    } catch (error) {
+        alert("No se encontró el Pokémon. Intenta con otro nombre.");
+    }
+}
+
 loadPokedex()
