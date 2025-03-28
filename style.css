@@ -45,7 +45,24 @@ h1 img {
     gap: 10px; /* Espaciado entre los elementos */
 }
 #btnBuscar{
-    background-color: #beddd6;
+    background-image: url('./assets/imgBuscar.png'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    width: 50px; /* Ajusta el ancho según el tamaño de tu imagen */
+    height: 50px; /* Ajusta la altura según el tamaño de tu imagen */
+    border: none; /* Elimina el borde predeterminado del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    background-color: rgba(0, 229, 255, 0.624);
+}
+#btnBck{
+    background-image: url('./assets/imgBck.png'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover; /* Ajusta la imagen al tamaño del botón */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    width: 50px; /* Ajusta el ancho según el tamaño de tu imagen */
+    height: 50px; /* Ajusta la altura según el tamaño de tu imagen */
+    border: none; /* Elimina el borde predeterminado del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    background-color: rgba(0, 229, 255, 0.624);
 }
 
 #btnBuscar img {

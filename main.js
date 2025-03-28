@@ -3,7 +3,8 @@ const pokemonDetail=document.getElementById("pokemonDetail")
 const pokemonInfo= document.getElementById("pokemonInfo")
 const btnBack = document.getElementById("btnBack")
 const btnBuscar = document.getElementById("btnBuscar")
-
+const btnBck = document.getElementById("btnBck")
+const buscar= document.getElementById("buscar")
 
 /*  FUNCION QUE LLAMA A  LA API */
 
@@ -65,6 +66,7 @@ async function loadPokedex() {
  */    }
     
 }
+//BOTON ATRAS
 btnBack.addEventListener("click",()=>{
     pokemonList.style.display="grid"
     pokemonDetail.style.display="none"
@@ -83,6 +85,19 @@ async function searchPokemonByName() {
         if (pokemon) {
             pokemonList.innerHTML = ""; // Limpiar la lista de Pokémon
             displayPokemon(pokemon); // Mostrar solo el Pokémon buscado
+            //Creacion del boton.#########################
+            const btnBck = document.createElement("button");
+            btnBck.textContent = "";
+            btnBck.id = "btnBck";
+            buscar.appendChild(btnBck);
+
+            //##########################################
+            //Evento del boton.
+            btnBck.addEventListener("click", () => {
+                pokemonList.innerHTML = "";
+                loadPokedex();
+                btnBck.remove();
+            });
         }
     } catch (error) {
         alert("No se encontró el Pokémon. Intenta con otro nombre.");
