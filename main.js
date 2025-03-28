@@ -34,22 +34,21 @@ function displayPokemon(pokemon) {
 }
 
 function showPokemonDetail(pokemon) {
-  pokemonList.style.display = "none";
-  pokemonDetail.style.display = "block";
-  // Obtener todos los tipos del Pokémon
+  pokemonList.style.display = "none"; // 1. Ocultar la lista de Pokémon
+  pokemonDetail.style.display = "block"; // 2. Mostrar el detalle del Pokémon
+  // Obtener todos los tipos del Pokémon, Inicializar variables para los tipos del Pokémon
   let typesName = [];
   let typesImg = "";
   for (i = 0; i < pokemon.types.length; i++) {
-    console.log(pokemon.types[i].type.name);
+    //Iterar sobre los tipos del Pokémon
+    console.log(pokemon.types[i].type.name); //Mostrar el nombre del tipo en la consola (para depuración)
     typesImg =
       typesImg +
-      `<img src = "./assets/${pokemon.types[i].type.name}.png" alt= "logo tipo ${pokemon.types[i].type.name}">`;
-    typesName.push(pokemon.types[i].type.name);
+      `<img src = "./assets/${pokemon.types[i].type.name}.png" alt= "logo tipo ${pokemon.types[i].type.name}">`; //Construir el HTML de la imagen del tipo
+    typesName.push(pokemon.types[i].type.name); //Agregar el nombre del tipo al array typesName
   }
-  pokemonList.style.display = "none";
-  pokemonDetail.style.display = "block";
-  /*     let types = pokemon.types.map(t => t.type.name).join(", ");  // Une los tipos con una coma
-   */ pokemonInfo.innerHTML = `
+  //Actualizar el contenido HTML del detalle del Pokémon
+  pokemonInfo.innerHTML = `
     <img src="${pokemon.sprites.front_default}" alt="image view front ${pokemon.name}">
     <img src="${pokemon.sprites.back_default}" alt="image view back ${pokemon.name}">
     <h4> ${typesName}</h4>
@@ -71,7 +70,7 @@ async function loadStats() {
     let pokemonStats = await getPokemonData(i);
     let estadistica = pokemonStats.stats[i - 1].stat.name;
     let valor_estadistica = pokemonStats.stats[i - 1].base_stat;
-    console.log(estadistica +" = "+ valor_estadistica);
+    console.log(estadistica + " = " + valor_estadistica);
 
     /*         console.log(pokemon.types[0].type.name)
      */
