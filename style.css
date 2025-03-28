@@ -31,7 +31,7 @@ h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 h1 img {
-    width: 80%; /* Ajuste del ancho */
+    width: 60%; /* Ajuste del ancho */
     height: auto; /* Corrección: fit-content no es válido */
     margin: 0 auto;
 }
