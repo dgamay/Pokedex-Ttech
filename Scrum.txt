@@ -1,0 +1,20 @@
+SCRUM
+
+PMV:Producto minimo viable
+
+1.Lo importante son las personas
+2.Funcionalidad del desarrollo sobre la documentacion
+3.Colaboracion con el cliente
+
+		Historias de usuario
+
+Quien? : usuario, administrador, visitante...
+Que? :Que es lo que quiere hacer
+Para que?: cual es el objetivo de esa tarea o funcionalidad
+
+Tareas: Actividades realizadas para el cumplimiento de la historia de usuario
+
+CARACTERISTICAS HISTORIAS DE USUARIO
+	I= Independiente: no requiere de otra
+	N= Negociable   :Se puede reemplazar por otra de mayor prioridad
+	V= V 

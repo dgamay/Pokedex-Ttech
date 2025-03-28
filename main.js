@@ -59,7 +59,7 @@ function showPokemonDetail(pokemon){
 }
 
 async function loadPokedex() {
-    for (let i = 1; i<=5; i++) {
+    for (let i = 1; i<=3; i++) {
         let pokemon =await getPokemonData(i)
         displayPokemon(pokemon)  
 /*         console.log(pokemon.types[0].type.name)      
