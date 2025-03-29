@@ -27,10 +27,6 @@ function displayPokemon(pokemon) {
     <img src="${pokemon.sprites.front_default}">
     <h3>${pokemon.name}</h3>
     <p> ID:${pokemon.id}
-    <table display: none;>
-    <tbody>
-    </tbody>
-  </table></p>
     `;
   pokemonCard.addEventListener("click", () => showPokemonDetail(pokemon));
   pokemonList.appendChild(pokemonCard); // añade la tarjeta a la lista de pokemon
@@ -69,17 +65,17 @@ async function loadPokedex() {
   }
 }
 
-async function loadStats() {
-  for (let i = 1; i <= 6; i++) {
-    let pokemonStats = await getPokemonData(i);
-    let estadistica = pokemonStats.stats[i - 1].stat.name;
-    let valor_estadistica = pokemonStats.stats[i - 1].base_stat;
-    console.log(estadistica + " = " + valor_estadistica);
-
-    /*         console.log(pokemon.types[0].type.name)
-     */
+  async function loadStats(pokemonId) {
+    let pokemonStats = await getPokemonData(pokemonId);
+    if (!pokemonStats || !pokemonStats.stats) {
+      return {}; // Devuelve un objeto vacío si no hay estadísticas
+    }
+    const stats = {};
+    for (let i = 0; i < pokemonStats.stats.length; i++) {
+      stats[pokemonStats.stats[i].stat.name] = pokemonStats.stats[i].base_stat;
+    }
+    return stats;
   }
-}
 
 //BOTON ATRAS
 btnBack.addEventListener("click", () => {
@@ -91,26 +87,28 @@ btnBack.addEventListener("click", () => {
 btnBuscar.addEventListener("click", searchPokemonByName);
 
 async function searchPokemonByName() {
-  const inputBuscar = document
-    .getElementById("inputBuscar")
-    .value.toLowerCase(); // Convertir a minúsculas para evitar problemas de mayúsculas/minúsculas
+  const inputBuscar = document.getElementById("inputBuscar").value.toLowerCase();
   if (!inputBuscar) {
     alert("Por favor, ingresa un nombre de Pokémon.");
     return;
   }
   try {
-    const pokemon = await getPokemonData(inputBuscar); // Llamar a la API usando el nombre en lugar del ID
+    const pokemon = await getPokemonData(inputBuscar);
     if (pokemon) {
-      pokemonList.innerHTML = ""; // Limpiar la lista de Pokémon
-      displayPokemon(pokemon); // Mostrar solo el Pokémon buscado
-      //Creacion del boton.#########################
+      pokemonList.innerHTML = "";
+      displayPokemon(pokemon);
+      const stats = await loadStats(pokemon.id); // Obtener las estadísticas
+      // Agregar las estadísticas al pokemonCard.
+      const statsHTML = Object.entries(stats)
+        .map(([nombre, valor]) => `<p>${nombre}: ${valor}</p>`)
+        .join("");
+      pokemonCard.innerHTML += statsHTML; // Agregar las estadísticas al HTML del card.
+
       const btnBck = document.createElement("button");
       btnBck.textContent = "";
       btnBck.id = "btnBck";
       buscar.appendChild(btnBck);
 
-      //##########################################
-      //Evento del boton.
       btnBck.addEventListener("click", () => {
         pokemonList.innerHTML = "";
         loadPokedex();
@@ -121,6 +119,15 @@ async function searchPokemonByName() {
     alert("No se encontró el Pokémon. Intenta con otro nombre.");
   }
 }
-
+function displayPokemon(pokemon) {
+  pokemonCard = document.createElement("div"); //crea u div dinmico
+  pokemonCard.classList.add("pokemon-card"); // agrega la case l div creado
+  pokemonCard.innerHTML = `
+    <img src="${pokemon.sprites.front_default}">
+    <h3>${pokemon.name}</h3>
+    <p> ID:${pokemon.id}
+    `;
+  pokemonList.appendChild(pokemonCard);
+}
 loadPokedex();
 loadStats();
