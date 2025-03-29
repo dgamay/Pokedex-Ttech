@@ -87,38 +87,61 @@ btnBack.addEventListener("click", () => {
 btnBuscar.addEventListener("click", searchPokemonByName);
 
 async function searchPokemonByName() {
+  // Define una función asíncrona llamada searchPokemonByName.
   const inputBuscar = document.getElementById("inputBuscar").value.toLowerCase();
+  // Obtiene el valor del elemento con el id "inputBuscar", lo convierte a minúsculas y lo almacena en inputBuscar.
   if (!inputBuscar) {
+    // Verifica si inputBuscar está vacío (no se ingresó ningún nombre).
     alert("Por favor, ingresa un nombre de Pokémon.");
+    // Muestra una alerta pidiendo al usuario que ingrese un nombre.
     return;
+    // Sale de la función si no se ingresó un nombre.
   }
   try {
+    // Inicia un bloque try...catch para manejar posibles errores.
     const pokemon = await getPokemonData(inputBuscar);
+    // Llama a la función getPokemonData con el nombre del Pokémon y espera el resultado.
     if (pokemon) {
+      // Verifica si se encontró el Pokémon (si pokemon no es null o undefined).
       pokemonList.innerHTML = "";
+      // Limpia el contenido del elemento con el id "pokemonList".
       displayPokemon(pokemon);
-      const stats = await loadStats(pokemon.id); // Obtener las estadísticas
+      // Llama a la función displayPokemon para mostrar los datos básicos del Pokémon.
+      const stats = await loadStats(pokemon.id);
+      // Llama a la función loadStats para obtener las estadísticas del Pokémon y espera el resultado.
       // Agregar las estadísticas al pokemonCard.
       const statsHTML = Object.entries(stats)
+        // Convierte el objeto stats en una matriz de pares clave-valor y luego mapea cada par a una cadena HTML.
         .map(([nombre, valor]) => `<p>${nombre}: ${valor}</p>`)
+        // Une todas las cadenas HTML en una sola cadena.
         .join("");
-      pokemonCard.innerHTML += statsHTML; // Agregar las estadísticas al HTML del card.
-
+      pokemonCard.innerHTML += statsHTML;
+      // Agrega la cadena statsHTML al contenido HTML del elemento pokemonCard.
       const btnBck = document.createElement("button");
+      // Crea un nuevo elemento botón.
       btnBck.textContent = "";
+      // Establece el texto del botón como vacío.
       btnBck.id = "btnBck";
+      // Establece el id del botón como "btnBck".
       buscar.appendChild(btnBck);
-
+      // Agrega el botón como hijo del elemento "buscar".
       btnBck.addEventListener("click", () => {
+        // Agrega un event listener al botón para el evento click.
         pokemonList.innerHTML = "";
+        // Limpia el contenido del elemento pokemonList.
         loadPokedex();
+        // Llama a la función loadPokedex para cargar la lista original de Pokémon.
         btnBck.remove();
+        // Remueve el botón del DOM.
       });
     }
   } catch (error) {
+    // Captura cualquier error que ocurra dentro del bloque try.
     alert("No se encontró el Pokémon. Intenta con otro nombre.");
+    // Muestra una alerta indicando que no se encontró el Pokémon.
   }
 }
+
 function displayPokemon(pokemon) {
   pokemonCard = document.createElement("div"); //crea u div dinmico
   pokemonCard.classList.add("pokemon-card"); // agrega la case l div creado
