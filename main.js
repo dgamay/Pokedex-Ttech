@@ -26,7 +26,11 @@ function displayPokemon(pokemon) {
   pokemonCard.innerHTML = `
     <img src="${pokemon.sprites.front_default}">
     <h3>${pokemon.name}</h3>
-    <p> ID:${pokemon.id}</p>
+    <p> ID:${pokemon.id}
+    <table display: none;>
+    <tbody>
+    </tbody>
+  </table></p>
     `;
   pokemonCard.addEventListener("click", () => showPokemonDetail(pokemon));
   pokemonList.appendChild(pokemonCard); // añade la tarjeta a la lista de pokemon
